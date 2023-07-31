@@ -1,0 +1,145 @@
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: "Lora", serif;
+}
+
+header {
+  padding: 1rem;
+  background-color: #0f5cb9;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.add-btns {
+  display: flex;
+  gap: 1rem;
+}
+
+.add-btns button {
+  background-color: #0a9e43;
+  border: 10px solid #0a9e43;
+  color: white;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  
+}
+
+.add-btns button i {
+  margin-right: 0.5rem;
+}
+
+.lift-container {
+  position: absolute;
+  left: 30px;
+  height: 150px;
+  width: 80px;
+  background-color: #333;
+  position: relative;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.left-door,
+.right-door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background-color: #94a3b8;
+  border: 2px solid #475569;
+  z-index: 1;
+}
+
+.left-door {
+  left: 0;
+}
+
+.right-door {
+  right: 0;
+}
+
+.left-door-open {
+  transform: translateX(-100%);
+  transition: transform 2000ms ease-in-out;
+}
+
+.right-door-open {
+  transform: translateX(100%);
+  transition: transform 2000ms ease-in-out;
+}
+
+.left-door-close {
+  transform: translateX(0%);
+  transition: transform 2500ms ease-in-out;
+}
+
+.right-door-close {
+  transform: translateX(-0%);
+  transition: transform 2500ms ease-in-out;
+}
+
+.lift-buttons {
+  width: 100px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.lift-buttons button {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.lift-buttons .open-lift-btn {
+  background-color: #de7505;
+  border: 1px solid #de7505;
+}
+
+.lift-buttons .close-lift-btn {
+  background-color: #ab9df9;
+  border: 1px solid #ab9df9;
+}
+
+.open-lift-btn:disabled {
+  opacity: 0.5;
+}
+
+.floors {
+  position: relative;
+}
+
+.floor {
+  border-bottom: 1px solid #85a1c3;
+  height: 150px;
+  display: flex;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: no-drop;
+}
+
+.call-lift-btn:active {
+  animation: glow 1s infinite;
+  outline: none;
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px #de7505, 0 0 10px #de7505;
+  }
+  50% {
+    box-shadow: 0 0 15px #de7505, 0 0 20px #de7505;
+  }
+}
