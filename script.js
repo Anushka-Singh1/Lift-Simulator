@@ -60,18 +60,15 @@ function getLifts() {
 function getClosestEmptyLift(destFloor) {
   const lifts = getLifts();
 
-  const emptyLifts = lifts.reduce(
-    (result, value, i) =>
-      result.concat(
-        value.busy === false
-          ? {
-              i,
-              currFloor: value.currFloor,
-              distance: Math.abs(destFloor - value.currFloor),
-            }
-          : []
-      ),
-    []
+  
+  const emptyLifts = lifts.reduce((result, value, i) =>
+    !value.busy && value.currFloor !== destFloor
+      ? result.concat({
+          i,
+          currFloor: value.currFloor,
+          distance: Math.abs(destFloor - value.currFloor),
+        })
+      : result, []
   );
 
   if (emptyLifts.length <= 0) {
@@ -92,14 +89,26 @@ const getMaxLifts = () => {
   return Math.floor((viewportwidth - 100) / 120);
 };
 // Function to call the nearest empty lift to the requested floor
+
 const callLift = () => {
-  const { lift, index } = getClosestEmptyLift(requests.peek());
+  const requestedFloor = requests.peek();
+
+  // Check if there is already a lift on the requested floor
+  const existingLiftOnFloor = lifts.find((lift) => lift.currFloor === requestedFloor && lift.busy === false);
+
+  if (existingLiftOnFloor || (lifts.length > 0 && lifts[0].currFloor === requestedFloor)) {
+    // If there is an available lift on the requested floor or if the first lift is already there, don't proceed
+    return;
+  }
+
+  const { lift, index } = getClosestEmptyLift(requestedFloor);
 
   if (index >= 0) {
     lifts[index].busy = true;
     moveLift(lift.htmlEl, requests.dequeue(), index);
   }
 };
+
 
 // Lift actions - opening, closing, and moving
 
@@ -146,9 +155,15 @@ const moveLift = (lift, destFloor, index) => {
 };
 
 // Functions for managing lift requests and events
+
 function addRequest(destFloor) {
-  requests.enqueue(destFloor);
-  dispatchRequestAdded();
+  // Check if the request for the same floor already exists in the queue
+  const existingRequest = requests.items.find((floor) => floor === destFloor);
+
+  if (!existingRequest) {
+    requests.enqueue(destFloor);
+    dispatchRequestAdded();
+  }
 }
 
 function removeRequest() {
