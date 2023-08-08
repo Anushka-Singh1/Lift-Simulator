@@ -60,15 +60,16 @@ function getLifts() {
 function getClosestEmptyLift(destFloor) {
   const lifts = getLifts();
 
-  
-  const emptyLifts = lifts.reduce((result, value, i) =>
-    !value.busy && value.currFloor !== destFloor
-      ? result.concat({
-          i,
-          currFloor: value.currFloor,
-          distance: Math.abs(destFloor - value.currFloor),
-        })
-      : result, []
+  const emptyLifts = lifts.reduce(
+    (result, value, i) =>
+      !value.busy && value.currFloor !== destFloor
+        ? result.concat({
+            i,
+            currFloor: value.currFloor,
+            distance: Math.abs(destFloor - value.currFloor),
+          })
+        : result,
+    []
   );
 
   if (emptyLifts.length <= 0) {
@@ -94,9 +95,14 @@ const callLift = () => {
   const requestedFloor = requests.peek();
 
   // Check if there is already a lift on the requested floor
-  const existingLiftOnFloor = lifts.find((lift) => lift.currFloor === requestedFloor && lift.busy === false);
+  const existingLiftOnFloor = lifts.find(
+    (lift) => lift.currFloor === requestedFloor && lift.busy === false
+  );
 
-  if (existingLiftOnFloor || (lifts.length > 0 && lifts[0].currFloor === requestedFloor)) {
+  if (
+    existingLiftOnFloor ||
+    (lifts.length > 0 && lifts[0].currFloor === requestedFloor)
+  ) {
     // If there is an available lift on the requested floor or if the first lift is already there, don't proceed
     return;
   }
@@ -108,7 +114,6 @@ const callLift = () => {
     moveLift(lift.htmlEl, requests.dequeue(), index);
   }
 };
-
 
 // Lift actions - opening, closing, and moving
 
@@ -245,10 +250,10 @@ function getFloorEl() {
   floorEl.innerHTML += `
                   <div class="lift-buttons">
                       <button class="call-lift-btn open-lift-btn" data-lift-num="${newLiftNum}">
-                          <i class="fa-solid fa-angle-up"></i>
+                          Up
                       </button>
                       <button class="call-lift-btn close-lift-btn" data-lift-num="${newLiftNum}">
-                          <i class="fa-solid fa-angle-down"></i>
+                          Down
                       </button>
                   </div>
                 `;
