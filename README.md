@@ -1,7 +1,6 @@
 # Lift-Simulator
 The Lift Simulator project aims to demonstrate the efficient management of lifts within a building. It allows users to dynamically add new floors and lifts to the simulation, observe the lift doors' opening and closing, and witness the lifts moving to handle floor requests.
 
-![lift](https://github.com/Anushka-Singh1/Lift-Simulator/assets/98011558/fbc7a502-5f4a-4423-8384-7083a388ec60)
 # How to Use
 <b>1.</b> Open the "index.html" file in a web browser.
 
